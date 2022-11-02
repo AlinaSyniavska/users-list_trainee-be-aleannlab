@@ -1,103 +1,126 @@
-import {noteCategory, noteStatus} from './js/constants.js';
-import {guid} from './js/helpers.js';
+import {rangeRank, userStatus} from './js/constants.js';
+import {guid, getRandomIntRank} from './js/helpers.js';
+import {renderUsers} from "./js/rendering.js";
 
-import {updateNoteIndex} from "./js/eventListeners.js"
-import {renderNotes} from "./js/rendering.js"
-
-const notesArray = [
+const usersArray = [
     {
         id: guid(),
-        name: 'Shopping List',
-        created: '2022, 9, 25',
-        category: noteCategory.TASK,
-        content: 'Milk, cheese, cakes',
-        dates: [],
-        noteStatus: noteStatus.ACTIVE,
+        rank: getRandomIntRank(rangeRank.MIN, rangeRank.MAX),
+        name: 'Leanne Graham',
+        username: 'Bret',
+        email: 'Sincere@april.biz',
+        order: 'item1, item2, item3',
+        userStatus: userStatus.ACTIVE,
     },
     {
         id: guid(),
-        name: 'Health Hackathon',
-        created: '2022, 9, 29',
-        category: noteCategory.RANDOM_THOUGHT,
-        content: 'Health Hackathon is an event where you will solve challenges and create new innovative products for health and healthcare!',
-        dates: [],
-        noteStatus: noteStatus.ACTIVE,
+        rank: getRandomIntRank(rangeRank.MIN, rangeRank.MAX),
+        name: 'Ervin Howell',
+        username: 'Antonette',
+        email: 'Shanna@melissa.tv',
+        order: 'item1, item2',
+        userStatus: userStatus.ACTIVE,
     },
     {
         id: guid(),
-        name: 'New Travel',
-        created: '2022, 10, 1',
-        category: noteCategory.IDEA,
-        content: 'New Travel',
-        dates: [],
-        noteStatus: noteStatus.ACTIVE,
+        rank: getRandomIntRank(rangeRank.MIN, rangeRank.MAX),
+        name: 'Clementine Bauch',
+        username: 'Samantha',
+        email: 'Nathan@yesenia.net',
+        order: 'item1, item2, item3',
+        userStatus: userStatus.ACTIVE,
     },
     {
         id: guid(),
-        name: 'Dynamic Talks',
-        created: '2022, 9, 23',
-        category: noteCategory.IDEA,
-        content: 'The event will be held in English',
-        dates: [],
-        noteStatus: noteStatus.ACTIVE,
+        rank: getRandomIntRank(rangeRank.MIN, rangeRank.MAX),
+        name: 'Patricia Lebsack',
+        username: 'Karianne',
+        email: 'Julianne.OConner@kory.org',
+        order: 'item1, item2, item3',
+        userStatus: userStatus.ACTIVE,
     },
     {
         id: guid(),
-        name: 'Books',
-        created: '2022, 9, 25',
-        category: noteCategory.TASK,
-        content: 'JavaScript for impatient programmers',
-        dates: [],
-        noteStatus: noteStatus.ACTIVE,
+        rank: getRandomIntRank(rangeRank.MIN, rangeRank.MAX),
+        name: 'Chelsey Dietrich',
+        username: 'Kamren',
+        email: 'Lucio_Hettinger@annie.ca',
+        order: 'item1',
+        userStatus: userStatus.ACTIVE,
     },
     {
         id: guid(),
-        name: ' Webinar “Devops — More than the tools and tech”',
-        created: '2022, 10, 10',
-        category: noteCategory.TASK,
-        content: 'Developers Shore are announcing a webinar — “Devops — More than the tools and tech” with Martin Comstedt',
-        dates: [],
-        noteStatus: noteStatus.ACTIVE,
+        rank: getRandomIntRank(rangeRank.MIN, rangeRank.MAX),
+        name: 'Mrs. Dennis Schulist',
+        username: 'Leopoldo_Corkery',
+        email: 'Karley_Dach@jasper.info',
+        order: 'item1, item2',
+        userStatus: userStatus.ACTIVE,
     },
     {
         id: guid(),
-        name: 'NASA Open APIs',
-        created: '2022, 9, 25',
-        category: noteCategory.TASK,
-        content: 'View NASA Open APIs',
-        dates: [],
-        noteStatus: noteStatus.ACTIVE,
+        rank: getRandomIntRank(rangeRank.MIN, rangeRank.MAX),
+        name: 'Kurtis Weissnat',
+        username: 'Elwyn.Skiles',
+        email: 'Telly.Hoeger@billy.biz',
+        order: 'item1, item2',
+        userStatus: userStatus.ACTIVE,
     },
+    {
+        id: guid(),
+        rank: getRandomIntRank(rangeRank.MIN, rangeRank.MAX),
+        name: 'Nicholas Runolfsdottir V',
+        username: 'Maxime_Nienow',
+        email: 'Sherwood@rosamond.me',
+        order: 'item1, item2, item3',
+        userStatus: userStatus.ACTIVE,
+    },
+    {
+        id: guid(),
+        rank: getRandomIntRank(rangeRank.MIN, rangeRank.MAX),
+        name: 'Glenna Reichert',
+        username: 'Delphine',
+        email: 'Chaim_McDermott@dana.io',
+        order: 'item1, item2, item3',
+        userStatus: userStatus.ACTIVE,
+    },
+    {
+        id: guid(),
+        rank: getRandomIntRank(rangeRank.MIN, rangeRank.MAX),
+        name: 'Clementina DuBuque',
+        username: 'Moriah.Stanton',
+        email: 'Rey.Padberg@karina.biz',
+        order: 'item1',
+        userStatus: userStatus.ACTIVE,
+    }
 ];
 
-const notesContainer = document.getElementsByClassName('notesContainer')[0];
-const archNotesContainer = document.getElementsByClassName('archNotesContainer')[0];
-const statsContainer = document.getElementsByClassName('statisticContainer')[0];
-const iframe = document.getElementById('newNoteWin');
+const usersContainer = document.getElementsByClassName('usersContainer')[0];
+const iframe = document.getElementById('newUserWin');
 
-const btnCreateNote = document.getElementById('btnCreateNote');
+const btnCreateUser = document.getElementById('btnCreateUser');
 
 const objDOMElements = {
-    notesContainer,
-    archNotesContainer,
-    statsContainer,
+    usersContainer,
     iframe,
 };
 
-renderNotes(notesArray, objDOMElements);
+renderUsers(usersArray, objDOMElements);
+iframe.classList.add('visible');
 
-btnCreateNote.onclick = () => {
+btnCreateUser.onclick = () => {
     iframe.classList.add('visible');
 }
 
 window.onmessage = function (event) {
-    if ('id' in event.data && 'name' in event.data && 'created' in event.data && 'category' in event.data && 'content' in event.data && 'dates' in event.data && 'noteStatus' in event.data) {
-        notesArray.push({...event.data});
-    } else if ('name' in event.data && 'created' in event.data && 'category' in event.data && 'content' in event.data && 'dates' in event.data) {
+    if ('id' in event.data && 'rank' in event.data && 'name' in event.data && 'username' in event.data && 'email' in event.data && 'order' in event.data && 'userStatus' in event.data) {
+        usersArray.push({...event.data});
+    } /*else if ('name' in event.data && 'created' in event.data && 'category' in event.data && 'content' in event.data && 'dates' in event.data) {
         notesArray[updateNoteIndex] = Object.assign(notesArray[updateNoteIndex], {...event.data});
-    }
-    renderNotes(notesArray, objDOMElements);
+    }*/
+    renderUsers(usersArray, objDOMElements);
 };
+
 
 
 

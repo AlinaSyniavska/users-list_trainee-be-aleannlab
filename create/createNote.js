@@ -1,14 +1,16 @@
-import {guid} from "../../radency-note_app-JavaScript/js/helpers.js";
-import {noteStatus} from "../../radency-note_app-JavaScript/js/constants.js";
+import {renderRanks} from "../js/rendering.js";
 
 const form = document.forms.noteForm;
 const btnSetNote = document.getElementById('btnSetNote');
 const btnSendEditNote = document.getElementById('btnEditNote');
 const btnClose = document.getElementById('btnClose');
 
-let oldCreateNoteDate;
+const rankContainer = document.getElementsByClassName('noteRank')[0];
 
-btnSetNote?.addEventListener('click', (e) => {
+renderRanks(rankContainer);
+
+
+/*btnSetNote?.addEventListener('click', (e) => {
     if (form.noteName.value === '' || form.noteCreateDate.value === '' || form.noteContent.value === '') {
         e.preventDefault();
         alert('Fill all fields!')
@@ -26,8 +28,9 @@ btnSetNote?.addEventListener('click', (e) => {
     }
 
     window.top.postMessage(newNote, '*')
-})
+})*/
 
+/*
 btnSendEditNote?.addEventListener('click', (e) => {
     if (form.noteName.value === '' || form.noteCreateDate.value === '' || form.noteContent.value === '') {
         e.preventDefault();
@@ -46,12 +49,13 @@ btnSendEditNote?.addEventListener('click', (e) => {
     window.top.postMessage(editNote, '*');
     window.parent.document.getElementById('newNoteWin').classList.remove('visible');
 })
+*/
 
-btnClose?.addEventListener('click', () => {
+/*btnClose?.addEventListener('click', () => {
     window.parent.document.getElementById('newNoteWin').classList.remove('visible');
-})
+})*/
 
-window.onmessage = function (event) {
+/*window.onmessage = function (event) {
     if ('id' in event.data && 'name' in event.data && 'created' in event.data && 'category' in event.data && 'content' in event.data && 'dates' in event.data && 'noteStatus' in event.data) {
         form.noteName.value = event.data.name;
         form.noteCreateDate.value = event.data.created;
@@ -62,5 +66,5 @@ window.onmessage = function (event) {
 
         btnSendEditNote.removeAttribute('disabled');
     }
-};
+};*/
 

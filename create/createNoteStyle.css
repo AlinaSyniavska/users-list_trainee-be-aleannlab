@@ -12,12 +12,25 @@
     box-sizing: border-box;
 }
 
-label {
-    display: block;
-    margin-bottom: 10px;
+.noteRankTitle {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
-input[type="text"] {
+.noteRank > input {
+    margin-bottom: 20px;
+}
+.noteRank > label {
+    margin-right: 35px;
+}
+.noteRank > label:hover,
+.noteRank > input:hover{
+    cursor: pointer;
+}
+
+input[type="text"],
+input[type="email"] {
+    margin-bottom: 10px;
     width: 100%;
 }
 
@@ -32,10 +45,10 @@ input[type="text"] {
     width: 100px;
     cursor: pointer;
 
-    transition: 1s;
+    transition: 0.5s;
     transform: scale(100%);
 }
 .formBtnContainer > button:hover {
-    transition: 1s;
+    transition: 0.5s;
     transform: scale(110%);
 }

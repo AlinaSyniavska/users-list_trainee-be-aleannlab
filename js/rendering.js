@@ -1,52 +1,36 @@
-import {noteHeaderHtml, statHeaderHtml} from "./htmlTemplates.js";
-import {noteCategory, noteStatus} from "./constants.js";
-import {countStatus, formatDate} from "./helpers.js";
-import {addEventAllBtnArch, addEventAllBtnEdit, addEventAllBtnTrash, addEventAllBtnUnzip} from "./eventListeners.js";
+import {headerListHtml} from "./htmlTemplates.js";
+import {rangeRank, userStatus} from "./constants.js";
+import {addEventAllBtnEdit, addEventAllBtnTrash} from "./eventListeners.js";
 
-export const renderNotes = (arr, objDOM) => {
-    const {notesContainer, archNotesContainer, statsContainer} = objDOM;
+export const renderUsers = (arr, objDOM) => {
+    const {usersContainer} = objDOM;
 
-    notesContainer.innerHTML = noteHeaderHtml;
-    archNotesContainer.innerHTML = '';
+    const sortedArr = arr.slice().sort((a, b) => b.rank - a.rank);
 
-    arr.forEach(item => {
-        if (item.noteStatus !== noteStatus.DELETED) {
-            const note = document.createElement('div');
-            note.classList.add('note', 'noteItem');
-            note.setAttribute('data-id', item.id);
+    usersContainer.innerHTML = headerListHtml;
 
-            const noteName = document.createElement('div');
-            noteName.classList.add('noteName');
+    sortedArr.forEach(item => {
+        if (item.userStatus !== userStatus.DELETED) {
+            const user = document.createElement('div');
+            user.classList.add('user', 'userItem');
+            user.setAttribute('data-id', item.id);
+            user.setAttribute('data-rank', item.rank);
 
-            switch (item.category) {
-                case 'Task':
-                    noteName.innerHTML = '<i class="fa-solid fa-calendar-check"></i>' + item.name
-                    break;
-                case 'Random Thought':
-                    noteName.innerHTML = '<i class="fa-solid fa-head-side-virus"></i>' + item.name
-                    break;
-                case 'Idea':
-                    noteName.innerHTML = '<i class="fa-solid fa-lightbulb"></i>' + item.name
-                    break;
-                default:
-                    noteName.innerHTML = '<i class="fa-sharp fa-solid fa-clipboard-list-check"></i>' + item.name
-            }
+            const userRank = document.createElement('div');
+            userRank.classList.add('userRank');
+            userRank.innerHTML = item.rank;
 
-            const noteCreated = document.createElement('div');
-            noteCreated.classList.add('noteCreated');
-            noteCreated.innerText = formatDate(item.created);
+            const userName = document.createElement('div');
+            userName.classList.add('userName');
+            userName.innerHTML = item.name;
 
-            const noteCategory = document.createElement('div');
-            noteCategory.classList.add('noteCategory');
-            noteCategory.innerText = item.category;
+            const userEmail = document.createElement('div');
+            userEmail.classList.add('userEmail');
+            userEmail.innerText = item.email;
 
-            const noteContent = document.createElement('div');
-            noteContent.classList.add('noteContent');
-            noteContent.innerText = item.content;
-
-            const noteDates = document.createElement('div');
-            noteDates.classList.add('noteDates');
-            noteDates.innerText = item.dates.map(i => formatDate(i)).join('; ');
+            const userOrder = document.createElement('div');
+            userOrder.classList.add('userOrder');
+            userOrder.innerText = item.order;
 
             const btnControl = document.createElement('div');
             btnControl.classList.add('btnControl');
@@ -54,82 +38,49 @@ export const renderNotes = (arr, objDOM) => {
             const btnEdit = document.createElement('div');
             btnEdit.classList.add('btnEdit');
             btnEdit.innerHTML = '<i class="fa-solid fa-pen"></i>'
-            const btnArch = document.createElement('div');
-            btnArch.classList.add('btnArch');
-            btnArch.innerHTML = '<i class="fa-solid fa-file-zipper"></i>'
+
             const btnTrash = document.createElement('div');
             btnTrash.classList.add('btnTrash');
             btnTrash.innerHTML = '<i class="fa-solid fa-trash"></i>'
 
-            if (item.noteStatus === noteStatus.ACTIVE) {
-                btnControl.append(btnEdit, btnArch, btnTrash);
-            } else if (item.noteStatus === noteStatus.ARCHIVED) {
-                btnControl.append(btnArch);
-            }
+            btnControl.append(btnEdit, btnTrash);
 
-            note.append(noteName, noteCreated, noteCategory, noteContent, noteDates, btnControl);
-            if (item.noteStatus === noteStatus.ACTIVE) {
-                notesContainer.appendChild(note);
-            } else if (item.noteStatus === noteStatus.ARCHIVED) {
-                archNotesContainer.appendChild(note);
-            }
+            user.append(userRank, userName, userEmail, userOrder, btnControl);
+            usersContainer.appendChild(user);
         }
     })
 
-    addEventAllBtnTrash(getDOMButtons(), arr, objDOM);
-    addEventAllBtnArch(getDOMButtons(), arr, objDOM);
+    addEventAllBtnTrash(getDOMButtons(), arr);
     addEventAllBtnEdit(getDOMButtons(), arr, objDOM);
-    addEventAllBtnUnzip(getDOMButtons(), arr, objDOM);
-
-    renderStatistics(noteCategory, arr, statsContainer);
 }
 
-export const renderStatistics = (categories, arr, container) => {
-    container.innerHTML = statHeaderHtml;
+export const renderRanks = (rankContainer) => {
+    for (let i = rangeRank.MIN; i <= rangeRank.MAX; i++) {
+        const rankElement = document.createElement('input');
+        rankElement.setAttribute("id", `rank${i}`);
+        rankElement.setAttribute("type", "radio");
+        rankElement.setAttribute("name", "noteRank");
+        rankElement.setAttribute("value", `${i}`);
 
-    for (const [, value] of Object.entries(categories)) {
-        const note = document.createElement('div');
-        note.classList.add('note', 'noteItem');
-
-        const noteCategory = document.createElement('div');
-        noteCategory.classList.add('noteName');
-
-        switch (value) {
-            case 'Task':
-                noteCategory.innerHTML = '<i class="fa-solid fa-calendar-check"></i>' + value
-                break;
-            case 'Random Thought':
-                noteCategory.innerHTML = '<i class="fa-solid fa-head-side-virus"></i>' + value
-                break;
-            case 'Idea':
-                noteCategory.innerHTML = '<i class="fa-solid fa-lightbulb"></i>' + value
-                break;
-            default:
-                noteCategory.innerHTML = '<i class="fa-sharp fa-solid fa-clipboard-list-check"></i>' + value
+        if(i === rangeRank.MIN){
+            rankElement.setAttribute("checked", "true");
         }
 
-        const actCount = document.createElement('div');
-        actCount.classList.add('noteContent');
-        actCount.innerText = countStatus(value, noteStatus.ACTIVE, arr);
-        const archCount = document.createElement('div');
-        archCount.classList.add('noteContent');
-        archCount.innerText = countStatus(value, noteStatus.ARCHIVED, arr);
+        const rankLabel = document.createElement('label');
+        rankLabel.setAttribute("for", `rank${i}`);
+        rankLabel.innerText = `${i}`;
 
-        note.append(noteCategory, actCount, archCount);
-        container.appendChild(note);
+        rankContainer.appendChild(rankElement);
+        rankContainer.appendChild(rankLabel);
     }
 }
 
 function getDOMButtons() {
-    const btnTrash = document.querySelectorAll('.noteItem > .btnControl > .btnTrash');
-    const btnArch = document.querySelectorAll('.notesContainer > .noteItem > .btnControl > .btnArch');
-    const btnEdit = document.querySelectorAll('.notesContainer > .noteItem > .btnControl > .btnEdit');
-    const btnUnzip = document.querySelectorAll('.archNotesContainer > .noteItem > .btnControl > .btnArch');
+    const btnTrash = document.querySelectorAll('.userItem > .btnControl > .btnTrash');
+    const btnEdit = document.querySelectorAll('.usersContainer > .userItem > .btnControl > .btnEdit');
 
     return {
         btnTrash,
-        btnArch,
         btnEdit,
-        btnUnzip,
     };
 }

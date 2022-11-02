@@ -1,13 +1,11 @@
-export const noteCategory = {
-    TASK: 'Task',
-    IDEA: 'Idea',
-    RANDOM_THOUGHT: 'Random Thought'
-};
-
-export const noteStatus = {
+export const userStatus = {
     ACTIVE: 'active',
-    ARCHIVED: 'archived',
-    DELETED: 'deleted'
+    DELETED: 'deleted',
+}
+
+export const rangeRank = {
+    MIN: 1,
+    MAX: 10,
 }
 
 
