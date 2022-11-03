@@ -106,7 +106,7 @@ const objDOMElements = {
 };
 
 renderUsers(usersArray, objDOMElements);
-iframe.classList.add('visible');
+// iframe.classList.add('visible');
 
 btnCreateUser.onclick = () => {
     iframe.classList.add('visible');

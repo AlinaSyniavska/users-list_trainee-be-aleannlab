@@ -1,4 +1,6 @@
 import {renderRanks} from "../js/rendering.js";
+import {checkEmptyFields, guid} from "../js/helpers.js";
+import {userStatus} from "../js/constants.js";
 
 const form = document.forms.noteForm;
 const btnSetNote = document.getElementById('btnSetNote');
@@ -9,26 +11,32 @@ const rankContainer = document.getElementsByClassName('noteRank')[0];
 
 renderRanks(rankContainer);
 
+form.noteName.addEventListener('input', (e) => {
+    const error = document.querySelector('.errorName');
+    error.classList.remove('visible');
+})
 
-/*btnSetNote?.addEventListener('click', (e) => {
-    if (form.noteName.value === '' || form.noteCreateDate.value === '' || form.noteContent.value === '') {
-        e.preventDefault();
-        alert('Fill all fields!')
-        return;
+form.noteEmail.addEventListener('input', (e) => {
+    const error = document.querySelector('.errorEmail');
+    error.classList.remove('visible');
+})
+
+btnSetNote?.addEventListener('click', (e) => {
+    if (checkEmptyFields(form, e)) {
+        const newNote = {
+            id: guid(),
+            rank: form.noteRank.value,
+            name: form.noteName.value,
+            username: form.noteUsername.value.trim() !== '' ? form.noteUsername.value : form.noteName.value,
+            email: form.noteEmail.value,
+            order: form.noteOrder.value,
+            userStatus: userStatus.ACTIVE,
+        }
+
+        window.top.postMessage(newNote, '*');
+        window.parent.document.getElementById('newUserWin').classList.remove('visible');
     }
-
-    const newNote = {
-        id: guid(),
-        name: form.noteName.value,
-        created: form.noteCreateDate.value,
-        category: form.noteCategory.value,
-        content: form.noteContent.value,
-        dates: [],
-        noteStatus: noteStatus.ACTIVE,
-    }
-
-    window.top.postMessage(newNote, '*')
-})*/
+})
 
 /*
 btnSendEditNote?.addEventListener('click', (e) => {
@@ -51,9 +59,9 @@ btnSendEditNote?.addEventListener('click', (e) => {
 })
 */
 
-/*btnClose?.addEventListener('click', () => {
-    window.parent.document.getElementById('newNoteWin').classList.remove('visible');
-})*/
+btnClose?.addEventListener('click', () => {
+    window.parent.document.getElementById('newUserWin').classList.remove('visible');
+})
 
 /*window.onmessage = function (event) {
     if ('id' in event.data && 'name' in event.data && 'created' in event.data && 'category' in event.data && 'content' in event.data && 'dates' in event.data && 'noteStatus' in event.data) {

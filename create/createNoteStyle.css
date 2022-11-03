@@ -52,3 +52,12 @@ input[type="email"] {
     transition: 0.5s;
     transform: scale(110%);
 }
+
+.error {
+    display: none;
+    color: red;
+}
+
+span.visible {
+    display: inline-block;
+}

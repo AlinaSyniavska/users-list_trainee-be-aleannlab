@@ -16,4 +16,23 @@ export function getRandomIntRank (min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+export function checkEmptyFields (form, event) {
+    const errorName = document.querySelector('.errorName');
+    const errorEmail = document.querySelector('.errorEmail');
+
+    if (form.noteName.value === '' || form.noteEmail.value === '') {
+        event.preventDefault();
+        if (form.noteName.value === '') {
+            errorName.classList.add('visible');
+        }
+        if (form.noteEmail.value === '') {
+            errorEmail.classList.add('visible');
+        }
+
+        return false;
+    }
+
+    return true;
+}
+
 
