@@ -37,11 +37,11 @@ export const renderUsers = (arr, objDOM) => {
 
             const btnEdit = document.createElement('div');
             btnEdit.classList.add('btnEdit');
-            btnEdit.innerHTML = '<i class="fa-solid fa-pen">E</i>'
+            btnEdit.innerHTML = '<i class="fa-solid fa-pen"></i>'
 
             const btnTrash = document.createElement('div');
             btnTrash.classList.add('btnTrash');
-            btnTrash.innerHTML = '<i class="fa-solid fa-trash">D</i>'
+            btnTrash.innerHTML = '<i class="fa-solid fa-trash"></i>'
 
             btnControl.append(btnEdit, btnTrash);
 

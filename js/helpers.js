@@ -9,13 +9,13 @@ export const guid = () => {
 }
 
 
-export function getRandomIntRank (min, max) {
+export function getRandomIntRank(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-export function checkEmptyFields (form, event) {
+export function checkEmptyFields(form, event) {
     const errorName = document.querySelector('.errorName');
     const errorEmail = document.querySelector('.errorEmail');
 
@@ -27,6 +27,15 @@ export function checkEmptyFields (form, event) {
         if (form.noteEmail.value === '') {
             errorEmail.classList.add('visible');
         }
+
+        return false;
+    }
+
+    const emailTemplate = new RegExp(/^(([^<>()\\[\].,;:\s@"]+(\.[^<>()\\[\].,;:\s@"]+)*)|(".+"))@((\[\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})|(([a-zA-Z\-\d]+\.)+[a-zA-Z]{2,}))$/, 'g');
+
+    if (!emailTemplate.test(form.noteEmail.value)) {
+        errorEmail.classList.add('visible');
+        errorEmail.innerText = 'Email not correct';
 
         return false;
     }
