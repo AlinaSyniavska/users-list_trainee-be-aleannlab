@@ -3,11 +3,10 @@ import {checkEmptyFields, guid} from "../js/helpers.js";
 import {userStatus} from "../js/constants.js";
 
 const form = document.forms.noteForm;
+const rankContainer = document.getElementsByClassName('noteRank')[0];
 const btnSetNote = document.getElementById('btnSetNote');
 const btnSendEditNote = document.getElementById('btnEditNote');
 const btnClose = document.getElementById('btnClose');
-
-const rankContainer = document.getElementsByClassName('noteRank')[0];
 
 renderRanks(rankContainer);
 
@@ -38,41 +37,35 @@ btnSetNote?.addEventListener('click', (e) => {
     }
 })
 
-/*
 btnSendEditNote?.addEventListener('click', (e) => {
-    if (form.noteName.value === '' || form.noteCreateDate.value === '' || form.noteContent.value === '') {
-        e.preventDefault();
-        alert('Fill all fields!')
-        return;
-    }
+    if (checkEmptyFields(form, e)) {
+        const editNote = {
+            rank: form.noteRank.value,
+            name: form.noteName.value,
+            username: form.noteUsername.value.trim() !== '' ? form.noteUsername.value : form.noteName.value,
+            order: form.noteOrder.value,
+        }
 
-    const editNote = {
-        name: form.noteName.value,
-        created: form.noteCreateDate.value,
-        category: form.noteCategory.value,
-        content: form.noteContent.value,
-        dates: oldCreateNoteDate === form.noteCreateDate.value ? [] : [oldCreateNoteDate, form.noteCreateDate.value],
+        window.top.postMessage(editNote, '*');
+        window.parent.document.getElementById('newUserWin').classList.remove('visible');
     }
-
-    window.top.postMessage(editNote, '*');
-    window.parent.document.getElementById('newNoteWin').classList.remove('visible');
 })
-*/
 
 btnClose?.addEventListener('click', () => {
     window.parent.document.getElementById('newUserWin').classList.remove('visible');
 })
 
-/*window.onmessage = function (event) {
-    if ('id' in event.data && 'name' in event.data && 'created' in event.data && 'category' in event.data && 'content' in event.data && 'dates' in event.data && 'noteStatus' in event.data) {
+window.onmessage = function (event) {
+    if ('id' in event.data && 'rank' in event.data && 'name' in event.data && 'username' in event.data && 'email' in event.data && 'order' in event.data && 'userStatus' in event.data) {
+        form.noteRank.value = event.data.rank;
         form.noteName.value = event.data.name;
-        form.noteCreateDate.value = event.data.created;
-        form.noteCategory.value = event.data.category;
-        form.noteContent.value = event.data.content;
+        form.noteUsername.value = event.data.username;
+        form.noteEmail.value = event.data.email;
+        form.noteOrder.value = event.data.order;
 
-        oldCreateNoteDate = event.data.created;
-
+        form.noteEmail.setAttribute('disabled', 'true');
+        btnSetNote.setAttribute('disabled', 'true');
         btnSendEditNote.removeAttribute('disabled');
     }
-};*/
+};
 

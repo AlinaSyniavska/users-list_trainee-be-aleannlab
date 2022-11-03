@@ -1,4 +1,3 @@
-
 export const guid = () => {
     let s4 = () => {
         return Math.floor((1 + Math.random()) * 0x10000)

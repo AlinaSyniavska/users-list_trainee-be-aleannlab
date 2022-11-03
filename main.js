@@ -1,6 +1,7 @@
 import {rangeRank, userStatus} from './js/constants.js';
 import {guid, getRandomIntRank} from './js/helpers.js';
 import {renderUsers} from "./js/rendering.js";
+import {updateNoteIndex} from "./js/eventListeners.js";
 
 const usersArray = [
     {
@@ -106,7 +107,6 @@ const objDOMElements = {
 };
 
 renderUsers(usersArray, objDOMElements);
-// iframe.classList.add('visible');
 
 btnCreateUser.onclick = () => {
     iframe.classList.add('visible');
@@ -115,9 +115,9 @@ btnCreateUser.onclick = () => {
 window.onmessage = function (event) {
     if ('id' in event.data && 'rank' in event.data && 'name' in event.data && 'username' in event.data && 'email' in event.data && 'order' in event.data && 'userStatus' in event.data) {
         usersArray.push({...event.data});
-    } /*else if ('name' in event.data && 'created' in event.data && 'category' in event.data && 'content' in event.data && 'dates' in event.data) {
-        notesArray[updateNoteIndex] = Object.assign(notesArray[updateNoteIndex], {...event.data});
-    }*/
+    } else if ('rank' in event.data && 'name' in event.data && 'username' in event.data && 'order' in event.data) {
+        usersArray[updateNoteIndex] = Object.assign(usersArray[updateNoteIndex], {...event.data});
+    }
     renderUsers(usersArray, objDOMElements);
 };
 
