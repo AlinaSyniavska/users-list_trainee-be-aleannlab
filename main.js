@@ -1,6 +1,6 @@
 import {rangeRank, userStatus} from './js/constants.js';
 import {guid, getRandomIntRank} from './js/helpers.js';
-import {renderUsers} from "./js/rendering.js";
+import {onDragOver, onDrop, renderUsers} from "./js/rendering.js";
 import {updateNoteIndex} from "./js/eventListeners.js";
 
 const usersArray = [
@@ -110,6 +110,14 @@ renderUsers(usersArray, objDOMElements);
 
 btnCreateUser.onclick = () => {
     iframe.classList.add('visible');
+}
+
+usersContainer.ondragover = (ev) => {
+    onDragOver(ev);
+}
+
+usersContainer.ondrop = (ev) => {
+    onDrop(ev);
 }
 
 window.onmessage = function (event) {

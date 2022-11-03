@@ -13,8 +13,13 @@ export const renderUsers = (arr, objDOM) => {
         if (item.userStatus !== userStatus.DELETED) {
             const user = document.createElement('div');
             user.classList.add('user', 'userItem');
-            user.setAttribute('data-id', item.id);
+            user.setAttribute('id', item.id);
             user.setAttribute('data-rank', item.rank);
+            user.setAttribute('draggable', 'true');
+
+            user.ondragstart = (ev) => {
+                onDragStart(ev);
+            }
 
             const userRank = document.createElement('div');
             userRank.classList.add('userRank');
@@ -62,7 +67,7 @@ export const renderRanks = (rankContainer) => {
         rankElement.setAttribute("name", "noteRank");
         rankElement.setAttribute("value", `${i}`);
 
-        if(i === rangeRank.MIN){
+        if (i === rangeRank.MIN) {
             rankElement.setAttribute("checked", "true");
         }
 
@@ -84,3 +89,41 @@ function getDOMButtons() {
         btnEdit,
     };
 }
+
+// ************* Drag and Drop API *****************
+
+export function onDragStart(event) {
+    event
+        .dataTransfer
+        .setData('text/plain', event.target.id);
+
+    event
+        .currentTarget
+        .style
+        .backgroundColor = 'yellow';
+}
+
+export function onDragOver(event) {
+    event.preventDefault();
+}
+
+export function onDrop(event) {
+    const id = event
+        .dataTransfer
+        .getData('text');
+
+    const draggableElement = document.getElementById(id);
+
+    const dropzone = event.target;
+
+    dropzone.appendChild(draggableElement);
+
+    event
+        .dataTransfer
+        .clearData();
+}
+
+
+
+
+

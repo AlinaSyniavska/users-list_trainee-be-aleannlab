@@ -10,12 +10,12 @@ const btnClose = document.getElementById('btnClose');
 
 renderRanks(rankContainer);
 
-form.noteName.addEventListener('input', (e) => {
+form.noteName.addEventListener('input', () => {
     const error = document.querySelector('.errorName');
     error.classList.remove('visible');
 })
 
-form.noteEmail.addEventListener('input', (e) => {
+form.noteEmail.addEventListener('input', () => {
     const error = document.querySelector('.errorEmail');
     error.classList.remove('visible');
 })
