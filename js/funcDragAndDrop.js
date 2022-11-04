@@ -1,11 +1,8 @@
-import {renderRanks} from "./rendering.js";
+import {initModal} from '../modal/modal.js'
 
 let dragSrcEl, idDragSrcEl, rankDragSrcEl;
 export let newRank, idUserNewRank;
-
-const modal = document.querySelector(".modal");
-const overlay = document.querySelector(".overlay");
-const closeModalBtn = document.querySelector(".btn-close");
+export const changeNewRank = rank => newRank = rank;
 
 export function handleDragStart(e) {
     this.style.opacity = '0.4';
@@ -64,32 +61,12 @@ export function handleDrop(e) {
     newRank = bottomRank;
     idUserNewRank = this.id;
 
-    renderRanks(bottomRank, possibleRankContainer);
-    openModal();
+    initModal(bottomRank, possibleRankContainer);
 
     return false;
 }
 
 
-const openModal = function () {
-    const ranks = modal.querySelectorAll('input[type=radio]');
 
-    modal.classList.remove("hidden");
-    overlay.classList.remove("hidden");
-
-    ranks.forEach(rank => {
-        rank.addEventListener('change', (e) => {
-            newRank = e.target.value;
-        })
-    })
-};
-
-const closeModal = function () {
-    modal.classList.add("hidden");
-    overlay.classList.add("hidden");
-};
-
-closeModalBtn?.addEventListener("click", closeModal);
-overlay?.addEventListener("click", closeModal);
 
 

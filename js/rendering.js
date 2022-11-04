@@ -72,7 +72,6 @@ export const renderUsers = (arr, objDOM) => {
 }
 
 export const renderRanks = (min, rankContainer) => {
-    // for (let i = rangeRank.MIN; i <= rangeRank.MAX; i++) {
     for (let i = min; i <= rangeRank.MAX; i++) {
         const rankElement = document.createElement('input');
         rankElement.setAttribute("id", `rank${i}`);
