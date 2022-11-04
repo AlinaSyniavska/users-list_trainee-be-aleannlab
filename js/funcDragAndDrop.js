@@ -1,5 +1,5 @@
 
-let dragSrcEl;
+/*let dragSrcEl;
 
 export function handleDragStart(e) {
     this.style.opacity = '0.4';
@@ -54,5 +54,5 @@ export function handleDrop(e) {
     // renderUsers()
 
     return false;
-}
+}*/
 

@@ -52,6 +52,7 @@ btnSendEditNote?.addEventListener('click', (e) => {
 })
 
 btnClose?.addEventListener('click', () => {
+    document.forms.noteForm.reset();
     window.parent.document.getElementById('newUserWin').classList.remove('visible');
 })
 
