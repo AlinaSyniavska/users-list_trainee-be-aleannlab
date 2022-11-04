@@ -1,6 +1,14 @@
 import {headerListHtml} from "./htmlTemplates.js";
 import {rangeRank, userStatus} from "./constants.js";
 import {addEventAllBtnEdit, addEventAllBtnTrash} from "./eventListeners.js";
+import {
+    handleDragEnd,
+    handleDragEnter,
+    handleDragLeave,
+    handleDragOver,
+    handleDragStart,
+    handleDrop
+} from "./funcDragAndDrop.js";
 
 export const renderUsers = (arr, objDOM) => {
     const {usersContainer} = objDOM;
@@ -13,13 +21,16 @@ export const renderUsers = (arr, objDOM) => {
         if (item.userStatus !== userStatus.DELETED) {
             const user = document.createElement('div');
             user.classList.add('user', 'userItem');
-            user.setAttribute('id', item.id);
+            user.setAttribute('data-id', item.id);
             user.setAttribute('data-rank', item.rank);
             user.setAttribute('draggable', 'true');
 
-            user.ondragstart = (ev) => {
-                onDragStart(ev);
-            }
+            user.addEventListener('dragstart', handleDragStart);
+            user.addEventListener('dragover', handleDragOver);
+            user.addEventListener('dragenter', handleDragEnter);
+            user.addEventListener('dragleave', handleDragLeave);
+            user.addEventListener('dragend', handleDragEnd);
+            user.addEventListener('drop', handleDrop);
 
             const userRank = document.createElement('div');
             userRank.classList.add('userRank');
@@ -88,39 +99,6 @@ function getDOMButtons() {
         btnTrash,
         btnEdit,
     };
-}
-
-// ************* Drag and Drop API *****************
-
-export function onDragStart(event) {
-    event
-        .dataTransfer
-        .setData('text/plain', event.target.id);
-
-    event
-        .currentTarget
-        .style
-        .backgroundColor = 'yellow';
-}
-
-export function onDragOver(event) {
-    event.preventDefault();
-}
-
-export function onDrop(event) {
-    const id = event
-        .dataTransfer
-        .getData('text');
-
-    const draggableElement = document.getElementById(id);
-
-    const dropzone = event.target;
-
-    dropzone.appendChild(draggableElement);
-
-    event
-        .dataTransfer
-        .clearData();
 }
 
 

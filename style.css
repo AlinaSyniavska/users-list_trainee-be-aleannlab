@@ -27,6 +27,11 @@
     align-items: center;
     background: #E8EAF5;
     color: #7A7A7A;
+    cursor: move;
+}
+
+.user.over {
+    border: 3px dotted #666;
 }
 
 .user div {
