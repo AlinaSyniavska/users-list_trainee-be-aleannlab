@@ -21,7 +21,7 @@ export const renderUsers = (arr, objDOM) => {
         if (item.userStatus !== userStatus.DELETED) {
             const user = document.createElement('div');
             user.classList.add('user', 'userItem');
-            // user.setAttribute('id', item.id);
+            user.setAttribute('id', item.id);
             user.setAttribute('data-id', item.id);
             user.setAttribute('data-rank', item.rank);
             user.setAttribute('draggable', 'true');

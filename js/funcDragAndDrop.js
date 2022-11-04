@@ -1,18 +1,16 @@
+import {rangeRank} from "./constants.js";
 
-let dragSrcEl;
+let dragSrcEl, idDragSrcEl, rankDragSrcEl;
 
 export function handleDragStart(e) {
     this.style.opacity = '0.4';
 
     dragSrcEl = this;
+    idDragSrcEl = e.target.id;
+    rankDragSrcEl = e.target.getAttribute('data-rank');
 
     e.dataTransfer.effectAllowed = 'move';
     e.dataTransfer.setData('text/html', this.innerHTML);
-
-    // console.log(this.getAttribute('data-id'))
-    // console.log(this.getAttribute('data-rank'))
-    // e.dataTransfer.setData('text/html', this.getAttribute('data-id'));
-    // e.dataTransfer.setData('text/html', this.getAttribute('data-rank'));
 }
 
 export function handleDragEnd(e) {
@@ -46,13 +44,25 @@ export function handleDrop(e) {
 
     if (dragSrcEl !== this) {
         dragSrcEl.innerHTML = this.innerHTML;
+        dragSrcEl.id = this.id;
+        dragSrcEl.setAttribute('data-rank', this.getAttribute('data-rank'));
+
         this.innerHTML = e.dataTransfer.getData('text/html');
+        this.id = idDragSrcEl;
+        this.setAttribute('data-rank', rankDragSrcEl);
     }
 
-    e.dataTransfer.clearData();
+    console.log(this.getAttribute('data-rank'))
+    console.log(this.nextSibling)
+
+    const bottomRank = this.nextSibling.getAttribute('data-rank');
+    console.log(bottomRank)
+
+    for (let i = bottomRank; i <= rangeRank.MAX; i++) {
+        console.log(`Possible rank = ${i}`)
+    }
 
     // renderUsers()
-
     return false;
 }
 
