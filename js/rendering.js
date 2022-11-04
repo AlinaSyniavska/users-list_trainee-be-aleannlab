@@ -1,7 +1,6 @@
 import {headerListHtml} from "./htmlTemplates.js";
 import {rangeRank, userStatus} from "./constants.js";
 import {addEventAllBtnEdit, addEventAllBtnTrash} from "./eventListeners.js";
-/*
 import {
     handleDragEnd,
     handleDragEnter,
@@ -10,7 +9,6 @@ import {
     handleDragStart,
     handleDrop
 } from "./funcDragAndDrop.js";
-*/
 
 export const renderUsers = (arr, objDOM) => {
     const {usersContainer} = objDOM;
@@ -26,14 +24,14 @@ export const renderUsers = (arr, objDOM) => {
             // user.setAttribute('id', item.id);
             user.setAttribute('data-id', item.id);
             user.setAttribute('data-rank', item.rank);
-            // user.setAttribute('draggable', 'true');
-            //
-            // user.addEventListener('dragstart', handleDragStart);
-            // user.addEventListener('dragover', handleDragOver);
-            // user.addEventListener('dragenter', handleDragEnter);
-            // user.addEventListener('dragleave', handleDragLeave);
-            // user.addEventListener('dragend', handleDragEnd);
-            // user.addEventListener('drop', handleDrop);
+            user.setAttribute('draggable', 'true');
+
+            user.addEventListener('dragstart', handleDragStart);
+            user.addEventListener('dragover', handleDragOver);
+            user.addEventListener('dragenter', handleDragEnter);
+            user.addEventListener('dragleave', handleDragLeave);
+            user.addEventListener('dragend', handleDragEnd);
+            user.addEventListener('drop', handleDrop);
 
             const userRank = document.createElement('div');
             userRank.classList.add('userRank');
