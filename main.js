@@ -110,6 +110,10 @@ renderUsers(usersArray, objDOMElements);
 
 btnCreateUser.onclick = () => {
     iframe.classList.add('visible');
+
+    document.querySelector('input[type=email]')?.removeAttribute('disabled');
+    document.getElementById('btnSetNote')?.removeAttribute('disabled');
+    document.getElementById('btnEditNote')?.setAttribute('disabled', 'true');
 }
 
 window.onmessage = function (event) {

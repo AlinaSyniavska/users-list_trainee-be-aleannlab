@@ -1,6 +1,6 @@
 import {renderRanks} from "../js/rendering.js";
 import {checkEmptyFields, guid} from "../js/helpers.js";
-import {userStatus} from "../js/constants.js";
+import {rangeRank, userStatus} from "../js/constants.js";
 
 const form = document.forms.noteForm;
 const rankContainer = document.getElementsByClassName('noteRank')[0];
@@ -8,7 +8,7 @@ const btnSetNote = document.getElementById('btnSetNote');
 const btnSendEditNote = document.getElementById('btnEditNote');
 const btnClose = document.getElementById('btnClose');
 
-renderRanks(rankContainer);
+renderRanks(rangeRank.MIN, rankContainer);
 
 form.noteName.addEventListener('input', () => {
     const error = document.querySelector('.errorName');
@@ -46,6 +46,11 @@ btnSendEditNote?.addEventListener('click', (e) => {
             order: form.noteOrder.value,
         }
 
+        document.forms.noteForm.reset();
+        document.forms.noteForm.noteEmail.removeAttribute('disabled');
+        document.getElementById('btnSetNote').removeAttribute('disabled');
+        document.getElementById('btnEditNote').setAttribute('disabled', 'true');
+
         window.top.postMessage(editNote, '*');
         window.parent.document.getElementById('newUserWin').classList.remove('visible');
     }
@@ -53,6 +58,10 @@ btnSendEditNote?.addEventListener('click', (e) => {
 
 btnClose?.addEventListener('click', () => {
     document.forms.noteForm.reset();
+    document.forms.noteForm.noteEmail.removeAttribute('disabled');
+    document.getElementById('btnSetNote').removeAttribute('disabled');
+    document.getElementById('btnEditNote').setAttribute('disabled', 'true');
+
     window.parent.document.getElementById('newUserWin').classList.remove('visible');
 })
 
