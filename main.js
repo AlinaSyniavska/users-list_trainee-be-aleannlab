@@ -2,6 +2,7 @@ import {rangeRank, userStatus} from './js/constants.js';
 import {guid, getRandomIntRank} from './js/helpers.js';
 import {renderUsers} from "./js/rendering.js";
 import {updateNoteIndex} from "./js/eventListeners.js";
+import {idUserNewRank, newRank} from "./js/funcDragAndDrop.js";
 
 const usersArray = [
     {
@@ -98,8 +99,10 @@ const usersArray = [
 
 const usersContainer = document.getElementsByClassName('usersContainer')[0];
 const iframe = document.getElementById('newUserWin');
-
 const btnCreateUser = document.getElementById('btnCreateUser');
+
+const overlay = document.querySelector(".overlay");
+const closeModalBtn = document.querySelector(".btn-close");
 
 const objDOMElements = {
     usersContainer,
@@ -125,7 +128,14 @@ window.onmessage = function (event) {
     renderUsers(usersArray, objDOMElements);
 };
 
+const closeModalMain = function () {
+    const index = usersArray.findIndex(item => item.id === idUserNewRank);
+    usersArray[index] = Object.assign(usersArray[index], {rank: newRank});
 
+    renderUsers(usersArray, objDOMElements);
+};
 
+closeModalBtn?.addEventListener("click", closeModalMain);
+overlay?.addEventListener("click", closeModalMain);
 
 

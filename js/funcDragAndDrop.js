@@ -1,6 +1,11 @@
-import {rangeRank} from "./constants.js";
+import {renderRanks} from "./rendering.js";
 
 let dragSrcEl, idDragSrcEl, rankDragSrcEl;
+export let newRank, idUserNewRank;
+
+const modal = document.querySelector(".modal");
+const overlay = document.querySelector(".overlay");
+const closeModalBtn = document.querySelector(".btn-close");
 
 export function handleDragStart(e) {
     this.style.opacity = '0.4';
@@ -52,17 +57,39 @@ export function handleDrop(e) {
         this.setAttribute('data-rank', rankDragSrcEl);
     }
 
-    console.log(this.getAttribute('data-rank'))
-    console.log(this.nextSibling)
-
     const bottomRank = this.nextSibling.getAttribute('data-rank');
-    console.log(bottomRank)
+    const possibleRankContainer = document.getElementsByClassName('possibleRankContainer')[0];
 
-    for (let i = bottomRank; i <= rangeRank.MAX; i++) {
-        console.log(`Possible rank = ${i}`)
-    }
+    possibleRankContainer.innerHTML = '';
+    newRank = bottomRank;
+    idUserNewRank = this.id;
 
-    // renderUsers()
+    renderRanks(bottomRank, possibleRankContainer);
+    openModal();
+
     return false;
 }
+
+
+const openModal = function () {
+    const ranks = modal.querySelectorAll('input[type=radio]');
+
+    modal.classList.remove("hidden");
+    overlay.classList.remove("hidden");
+
+    ranks.forEach(rank => {
+        rank.addEventListener('change', (e) => {
+            newRank = e.target.value;
+        })
+    })
+};
+
+const closeModal = function () {
+    modal.classList.add("hidden");
+    overlay.classList.add("hidden");
+};
+
+closeModalBtn?.addEventListener("click", closeModal);
+overlay?.addEventListener("click", closeModal);
+
 

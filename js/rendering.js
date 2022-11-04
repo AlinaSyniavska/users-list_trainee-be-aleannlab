@@ -80,7 +80,7 @@ export const renderRanks = (min, rankContainer) => {
         rankElement.setAttribute("name", "noteRank");
         rankElement.setAttribute("value", `${i}`);
 
-        if (i === rangeRank.MIN) {
+        if (i === min) {
             rankElement.setAttribute("checked", "true");
         }
 
