@@ -42,6 +42,8 @@ export function handleDragLeave(e) {
 }
 
 export function handleDrop(e) {
+    let bottomRank;
+
     e.stopPropagation();
 
     if (dragSrcEl !== this) {
@@ -54,7 +56,12 @@ export function handleDrop(e) {
         this.setAttribute('data-rank', rankDragSrcEl);
     }
 
-    const bottomRank = this.nextSibling.getAttribute('data-rank');
+    try {
+        bottomRank = this.nextSibling.getAttribute('data-rank');
+    }catch (e) {
+        bottomRank = dragSrcEl.getAttribute('data-rank');
+    }
+
     const possibleRankContainer = document.getElementsByClassName('possibleRankContainer')[0];
 
     possibleRankContainer.innerHTML = '';
